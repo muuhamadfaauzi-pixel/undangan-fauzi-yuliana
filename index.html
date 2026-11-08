@@ -128,6 +128,46 @@
     @media(min-width:641px){.cover{background:linear-gradient(100deg,#191815,#3d352a)}.cover-inner{box-shadow:0 0 60px #0007}.toolbar{left:50%}}
     @media(max-height:670px){.cover-inner{padding-top:20px;padding-bottom:18px}.cover-top{margin-top:9px}.cover-top h1{margin:13px 0}.cover-bottom{gap:4px}.to-person{margin-bottom:7px}.name-note{margin-bottom:8px}.hero-stack{padding-bottom:55px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+
+    /* RSVP dan Buku Tamu — Fauzi & Yuli */
+    .rsvp-page{background:#f5f0e7;color:#584838;padding:95px 22px 108px;min-height:100vh;text-align:center;scroll-margin-top:12px}
+    .rsvp-page .label{color:#a88c71}
+    .rsvp-page h2{font:400 clamp(44px,11vw,63px)/1.01 var(--serif);letter-spacing:-.025em;margin:16px auto 12px}
+    .rsvp-page .rsvp-intro{font:400 19px/1.53 var(--serif);max-width:350px;margin:0 auto 29px;color:#7f6e5e}
+    .rsvp-panel{padding:27px 22px 29px;border:1px solid #dfd3c2;background:#fffcf8;text-align:left;box-shadow:0 14px 44px rgba(71,53,36,.055);max-width:470px;margin:0 auto}
+    .rsvp-panel .form-title{font:400 27px/1.18 var(--serif);color:#594838;margin:0 0 19px;text-align:center}
+    .rsvp-field{display:block;margin:0 0 19px}
+    .rsvp-label,.rsvp-legend{display:block;font-size:10px;line-height:1.5;color:#806d5c;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+    .rsvp-panel input[type=text],.rsvp-panel textarea,.rsvp-panel select{display:block;width:100%;border:1px solid #d9cebf;background:#fff;min-height:49px;padding:12px 13px;border-radius:0;font-family:var(--sans);font-size:14px;color:#46392e;outline-offset:2px;outline-color:#bda389}
+    .rsvp-panel textarea{min-height:105px;resize:vertical;line-height:1.5}
+    .rsvp-panel input::placeholder,.rsvp-panel textarea::placeholder{color:#a9a096}
+    .rsvp-radio-wrap{display:flex;flex-wrap:wrap;gap:9px;margin-top:3px}
+    .rsvp-radio{position:relative;flex:1 1 90px;min-width:0;display:block;cursor:pointer}
+    .rsvp-radio input{position:absolute;opacity:0;width:100%;height:100%;inset:0;cursor:pointer}
+    .rsvp-radio span{display:grid;place-items:center;border:1px solid #d9cebf;padding:13px 5px;min-height:45px;font-size:12px;font-weight:600;color:#776452;background:#fff;transition:.2s}
+    .rsvp-radio input:checked+span{background:#514435;color:#fff;border-color:#514435}
+    .rsvp-radio input:focus-visible+span{outline:2px solid #b68f67;outline-offset:3px}
+    .rsvp-panel select:disabled{opacity:.52}
+    .rsvp-privacy{font-size:11px;color:#8b7c6d;line-height:1.65;margin:0 0 16px}
+    .rsvp-submit{display:flex;align-items:center;justify-content:center;width:100%;min-height:51px;cursor:pointer;border:1px solid #574536;background:#574536;color:white;font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.13em;transition:background .25s}
+    .rsvp-submit:hover:not(:disabled){background:#302820}
+    .rsvp-submit:disabled{cursor:not-allowed;opacity:.55}
+    .rsvp-status{font-size:12px;line-height:1.6;color:#735b45;text-align:center;margin:12px 0 0;min-height:18px}
+    .rsvp-status.error{color:#a24637}
+    .rsvp-status.success{color:#376c4b}
+    .guestbook{max-width:470px;margin:63px auto 0;text-align:left}
+    .guestbook-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 0 18px}
+    .guestbook-heading h3{font:400 34px var(--serif);margin:0}
+    .guestbook-heading button{font:700 10px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:#806751;background:transparent;border:0;border-bottom:1px solid #ad947e;padding:7px 0;cursor:pointer}
+    .wish-card{background:#fffcf7;border:1px solid #e0d4c7;padding:19px 19px 15px;margin:0 0 11px}
+    .wish-card-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .wish-name{font:500 23px/1.2 var(--serif);margin:0;color:#5b4636;overflow-wrap:anywhere}
+    .wish-date{font-size:10px;white-space:nowrap;color:#9b897b}
+    .wish-text{margin:11px 0 0;font:400 16px/1.55 var(--serif);color:#786757;white-space:pre-wrap;overflow-wrap:anywhere}
+    .wish-empty{padding:20px 18px;text-align:center;background:#fffaf3;border:1px solid #dfd3c6;font:400 17px/1.55 var(--serif);color:#847264}
+    .rsvp-noscript{font:400 14px/1.5 var(--serif);padding:10px 15px;text-align:center}
+    .rsvp-hidden-field{position:absolute!important;left:-10000px!important;opacity:0!important;width:1px!important;height:1px!important}
+    @media(max-width:375px){.rsvp-page{padding-inline:15px}.rsvp-panel{padding:22px 16px}.rsvp-radio span{font-size:11px}}
   </style>
 </head>
 <body class="locked">
@@ -239,6 +279,60 @@
         <p class="gallery-hint">Ketuk foto untuk melihat lebih dekat.</p>
       </div>
     </section>
+
+    <section class="rsvp-page" id="rsvp" aria-labelledby="rsvpTitle">
+      <div class="reveal">
+        <div class="label">Be Our Guest</div>
+        <h2 id="rsvpTitle">Ucapan <em style="color:#aa8e74">&amp;</em> Kehadiran</h2>
+        <div class="ornament" aria-hidden="true">✦</div>
+        <p class="rsvp-intro">Doa dan kehadiran Anda adalah hadiah terindah untuk hari bahagia kami.</p>
+      </div>
+      <div class="rsvp-panel reveal">
+        <h3 class="form-title">Konfirmasi Kehadiran</h3>
+        <form id="rsvpForm" autocomplete="on">
+          <label class="rsvp-field">
+            <span class="rsvp-label">Nama tamu</span>
+            <input type="text" id="rsvpName" name="nama" autocomplete="name" maxlength="80" minlength="2" placeholder="Tuliskan nama Anda" required>
+          </label>
+          <fieldset class="rsvp-field" style="border:0;margin-inline:0;padding:0;min-width:0">
+            <legend class="rsvp-legend">Apakah Anda akan hadir?</legend>
+            <div class="rsvp-radio-wrap">
+              <label class="rsvp-radio"><input type="radio" name="kehadiran" value="Hadir" required checked><span>Hadir</span></label>
+              <label class="rsvp-radio"><input type="radio" name="kehadiran" value="Tidak Hadir"><span>Tidak hadir</span></label>
+              <label class="rsvp-radio"><input type="radio" name="kehadiran" value="Belum Pasti"><span>Belum pasti</span></label>
+            </div>
+          </fieldset>
+          <label class="rsvp-field">
+            <span class="rsvp-label">Jumlah tamu yang hadir</span>
+            <select id="rsvpCount" name="jumlah">
+              <option value="1">1 orang</option><option value="2">2 orang</option>
+              <option value="3">3 orang</option><option value="4">4 orang</option>
+              <option value="5">5 orang</option><option value="6">6 orang</option>
+              <option value="7">7 orang</option><option value="8">8 orang</option>
+              <option value="9">9 orang</option><option value="10">10 orang</option>
+            </select>
+          </label>
+          <label class="rsvp-field">
+            <span class="rsvp-label">Ucapan dan doa (opsional)</span>
+            <textarea id="rsvpWish" name="ucapan" maxlength="400" placeholder="Tulis doa terbaik untuk Fauzi & Yuli..."></textarea>
+          </label>
+          <label class="rsvp-hidden-field" aria-hidden="true">Website<input type="text" id="rsvpWebsite" name="website" tabindex="-1" autocomplete="off"></label>
+          <p class="rsvp-privacy">Nama dan ucapan yang dikirim dapat dibaca tamu lain. Pilihan kehadiran dan jumlah tamu hanya tersimpan di daftar RSVP pengantin.</p>
+          <button class="rsvp-submit" type="submit" id="rsvpSend" disabled>Kirim Konfirmasi &amp; Ucapan</button>
+          <p id="rsvpStatus" class="rsvp-status" role="status" aria-live="polite">Formulir sedang disiapkan oleh pengantin.</p>
+        </form>
+      </div>
+      <div style="text-align:center;margin-top:25px"><button type="button" id="shareButton" class="solid-btn">Bagikan Undangan ↗</button></div>
+      <div class="guestbook reveal">
+        <div class="guestbook-heading">
+          <h3>Doa dari Tamu</h3>
+          <button type="button" id="refreshWishes" disabled>Muat ulang</button>
+        </div>
+        <div id="wishesList" aria-live="polite">
+          <div class="wish-empty">Buku tamu akan tampil setelah formulir diaktifkan.</div>
+        </div>
+      </div>
+    </section>
     <section class="closing" id="penutup">
       <img class="photo-full" data-photo="close" alt="Potret prewedding Fauzi dan Yuliana" loading="lazy">
       <div class="photo-shade"></div>
@@ -255,7 +349,7 @@
     <a href="#acara" aria-label="Ke jadwal acara"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 15h3"/></svg>Acara</a>
     <a href="#lokasi" aria-label="Ke lokasi acara"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a>
     <a href="#galeri" aria-label="Ke galeri"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 18 5-5 4 3 5-6 4 5"/></svg>Galeri</a>
-    <button type="button" id="shareButton" aria-label="Bagikan undangan"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4m-6.6 7 6.6 4.4"/></svg>Bagikan</button>
+    <a href="#rsvp" aria-label="Ke formulir RSVP dan ucapan"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.3 5.3 0 0 0-7.5 0L12 5.9l-1.3-1.3a5.3 5.3 0 1 0-7.5 7.5L12 21l8.8-8.9a5.3 5.3 0 0 0 0-7.5Z"/></svg>RSVP</a>
   </nav>
 </div>
 <div class="modal" id="photoModal" role="dialog" aria-modal="true" aria-label="Foto galeri diperbesar" aria-hidden="true">
@@ -316,6 +410,126 @@
     if(navigator.share){try{await navigator.share(data);return}catch(err){if(err.name==='AbortError')return}}
     try{await navigator.clipboard.writeText(window.location.href);toast()}catch(err){window.prompt('Salin tautan ini:',window.location.href)}
   });
+
+  /* GOOGLE SHEETS RSVP — sesuaikan dengan /exec Google Apps Script setelah dibuat. */
+  const RSVP_API = 'https://script.google.com/macros/s/AKfycbznlsCo7mIiH5jv8KTlrf68Cm_dBBPcc5cLs4smQrhuDXCkHZq64pO5g3SgmwIqnVbF/exec';
+  const rsvpForm = $('#rsvpForm');
+  const rsvpSend = $('#rsvpSend');
+  const rsvpStatus = $('#rsvpStatus');
+  const wishesList = $('#wishesList');
+  const refreshWishes = $('#refreshWishes');
+  const guestsCount = $('#rsvpCount');
+  const nameField = $('#rsvpName');
+  if (guest) nameField.value = guest;
+  const isRSVPConnected = /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(RSVP_API.trim());
+  const htmlSafe = str => String(str||'').slice(0,500);
+  function setRSVPStatus(msg, status='') {
+    rsvpStatus.textContent = msg;
+    rsvpStatus.className = 'rsvp-status' + (status ? ' ' + status : '');
+  }
+  function chooseCount() {
+    const attending = rsvpForm.querySelector('input[name=kehadiran]:checked').value === 'Hadir';
+    guestsCount.disabled = !attending;
+    if (!attending) guestsCount.value = '1';
+  }
+  rsvpForm.querySelectorAll('input[name=kehadiran]').forEach(radio => radio.addEventListener('change',chooseCount));
+  chooseCount();
+  if (isRSVPConnected) {
+    rsvpSend.disabled = false;
+    refreshWishes.disabled = false;
+    setRSVPStatus('Silakan isi formulir. Konfirmasi Anda akan tersimpan untuk pengantin.');
+  }
+  let jsonpCounter=0;
+  function fetchRSVP(query) {
+    return new Promise((resolve,reject) => {
+      const callback = '__fy_rsvp_' + Date.now() + '_' + (++jsonpCounter);
+      const node = document.createElement('script');
+      let finished=false;
+      const cleanup=()=>{if(finished)return;finished=true;clearTimeout(timer);delete window[callback];node.remove()};
+      const timer=setTimeout(()=>{cleanup();reject(new Error('Server tidak merespons'))},12000);
+      window[callback] = data => {cleanup();resolve(data)};
+      node.onerror=()=>{cleanup();reject(new Error('Tidak dapat menghubungi server'))};
+      const url=new URL(RSVP_API);
+      for(const [key,val] of Object.entries(query)) url.searchParams.set(key,val);
+      url.searchParams.set('callback', callback);
+      node.src = url.toString();
+      document.head.appendChild(node);
+    });
+  }
+  function addWishNode(row) {
+    const card=document.createElement('article');card.className='wish-card';
+    const heading=document.createElement('div');heading.className='wish-card-top';
+    const name=document.createElement('h4');name.className='wish-name';name.textContent=htmlSafe(row.nama);
+    const time=document.createElement('time');time.className='wish-date';
+    const timestamp=new Date(row.waktu);
+    if(Number.isFinite(timestamp.getTime())) {
+      time.dateTime=timestamp.toISOString();
+      time.textContent=new Intl.DateTimeFormat('id-ID',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Jakarta'}).format(timestamp);
+    }
+    const message=document.createElement('p');message.className='wish-text';message.textContent=htmlSafe(row.ucapan);
+    heading.append(name,time);card.append(heading,message);wishesList.appendChild(card);
+  }
+  async function loadWishes() {
+    if (!isRSVPConnected) return;
+    refreshWishes.disabled=true;
+    try {
+      const result=await fetchRSVP({action:'list'});
+      if(!result || !result.ok) throw new Error('Data gagal dimuat');
+      wishesList.replaceChildren();
+      const rows=Array.isArray(result.ucapan) ? result.ucapan : [];
+      if(!rows.length){
+        const empty=document.createElement('div');empty.className='wish-empty';
+        empty.textContent='Belum ada ucapan. Jadilah yang pertama mengirim doa untuk Fauzi & Yuli.';
+        wishesList.appendChild(empty);
+      } else rows.forEach(addWishNode);
+    } catch (err) {
+      wishesList.replaceChildren();
+      const notice=document.createElement('div');notice.className='wish-empty';
+      notice.textContent='Ucapan belum dapat dimuat. Silakan coba lagi.';
+      wishesList.appendChild(notice);
+    } finally { refreshWishes.disabled=false }
+  }
+  refreshWishes.addEventListener('click', loadWishes);
+  if(isRSVPConnected) loadWishes();
+  const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+  rsvpForm.addEventListener('submit',async event=>{
+    event.preventDefault();
+    if (!isRSVPConnected) {setRSVPStatus('Formulir belum diaktifkan.','error');return;}
+    if(!rsvpForm.reportValidity())return;
+    const nama=nameField.value.trim().replace(/\s+/g,' ').slice(0,80);
+    if(nama.length<2){setRSVPStatus('Masukkan nama minimal 2 karakter.','error');return;}
+    if($('#rsvpWebsite').value.trim()) return;
+    const kehadiran=rsvpForm.querySelector('input[name=kehadiran]:checked').value;
+    const jumlah=kehadiran==='Hadir'?Number(guestsCount.value):0;
+    const ucapan=$('#rsvpWish').value.trim().slice(0,400);
+    // Keep ID stable for this attempt so a timed-out request can be verified.
+    const id='fy'+Date.now().toString(36)+Math.random().toString(36).slice(2,13);
+    const payload={id,nama,kehadiran,jumlah,ucapan,website:''};
+    rsvpSend.disabled=true;
+    rsvpSend.textContent='Menyimpan…';
+    setRSVPStatus('Mengirim konfirmasi ke daftar tamu…');
+    try {
+      await fetch(RSVP_API,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+      let confirmed=false;
+      for(let attempt=0;attempt<7;attempt++){
+        await pause(1300+attempt*350);
+        try {
+          const receipt=await fetchRSVP({action:'receipt',id});
+          if(receipt?.ok && receipt.found){confirmed=true;break;}
+        } catch(err) { /* temporary network failure */ }
+      }
+      if(!confirmed) throw new Error('Konfirmasi belum terbaca');
+      setRSVPStatus('Terima kasih! Konfirmasi kehadiran dan ucapan Anda berhasil tersimpan.','success');
+      $('#rsvpWish').value='';
+      loadWishes();
+    } catch(err) {
+      setRSVPStatus('Belum dapat memastikan data tersimpan. Cek koneksi dan konfirmasi kepada pengantin sebelum mengirim ulang.','error');
+    } finally {
+      rsvpSend.disabled=false;
+      rsvpSend.textContent='Kirim Konfirmasi & Ucapan';
+    }
+  });
+
 })();
 </script>
 </body>
