@@ -1371,6 +1371,33 @@
     }
     @media(prefers-reduced-motion:reduce){#acara .event-maps-link{transition:none}}
 
+  
+
+    /* 2026-11-12: Stabilkan foto ketika halaman digulir di browser ponsel.
+       Animasi tulisan, pergantian foto setiap 4 detik, dan fade tetap aktif. */
+    .cinematic .photo-full,
+    .cinematic.is-visible .photo-full {
+      transform:none!important;
+      transition-property:opacity!important;
+    }
+    /* Dynamic dvh changes when the Android browser address bar retracts,
+       which otherwise resizes background photos during scrolling. Use a
+       stable large viewport height only for the sticky background layers. */
+    .opening-still-background,
+    .pair-still-background,
+    .story-gift-still {
+      height:100vh;
+      height:100lvh;
+      margin-bottom:-100vh;
+      margin-bottom:-100lvh;
+    }
+    .opening-photo,
+    .pair-photo,
+    .story-gift-photo,
+    .cinematic-backdrop-image {
+      transform:none!important;
+    }
+
   </style>
 </head>
 <body class="locked">
