@@ -1553,6 +1553,31 @@
       transform:none!important;
     }
 
+
+    /* 2026-11-13: Slide 5 (foto prewedding) TANPA animasi masuk/keluar.
+       Slide 4 -> 5 dan 5 -> 6 berganti langsung, tanpa tirai atau crossfade.
+       Foto tetap FIXED, overlay dan slideshow 4 detik di bagian cerita tetap. */
+    #wedding-background-plane.instant-prewedding-neighbors .viewport-photo-layer {
+      transition:none!important;
+      animation:none!important;
+    }
+    #wedding-background-plane.instant-prewedding-neighbors .viewport-photo-layer:not(.is-active) {
+      opacity:0!important;
+      visibility:hidden!important;
+    }
+    #wedding-background-plane.instant-prewedding-neighbors .viewport-photo-layer.is-active {
+      opacity:1!important;
+      visibility:visible!important;
+    }
+    /* Teks slide foto juga langsung terlihat; tanpa efek reveal/geser. */
+    .photo-scene .scene-copy.reveal,
+    .photo-scene .scene-copy.reveal.is-visible {
+      opacity:1!important;
+      transform:none!important;
+      transition:none!important;
+      animation:none!important;
+    }
+
   </style>
 </head>
 <body class="locked">
@@ -1919,6 +1944,9 @@
   // Foto selalu berada di bidang FIXED global yang bukan anak dari section scroll.
   // Lapisan yang terlihat berganti berdasarkan posisi section, tidak bergerak
   // mengikuti scroll. Slideshow 4 detik dan fade tetap menggunakan logika asli.
+  // Background tiap slide tetap terkunci di layar.
+  // Slide 4 -> 5 -> 6 sekarang CUT LANGSUNG (tanpa tirai / fade).
+  // Animasi bagian lain dan timer slideshow 4 detik tetap memakai kode asal.
   (function installViewportPhotoPlane(){
     const opening=document.getElementById('opening-stages');
     const photoScene=document.querySelector('.photo-scene');
@@ -1939,91 +1967,38 @@
       layer.className='viewport-photo-layer';
       layer.dataset.scene=name;
       layer.appendChild(photo);
-      // Background wajib siap untuk crossfade; jangan menunggu lazy load saat masuk slide.
-      if(photo.tagName === 'IMG') photo.loading='eager';
+      if(photo.tagName==='IMG')photo.loading='eager';
       photo.querySelectorAll?.('img').forEach(img=>{img.loading='eager';});
       root.appendChild(layer);
       return {stage,layer,name};
     });
     if(!items.length){root.remove();return;}
     document.documentElement.classList.add('has-viewport-photo-plane');
-    let pending=false, current='';
-    const openingLayer=items.find(item=>item.name==='opening')?.layer;
-    const photoLayer=items.find(item=>item.name==='photo')?.layer;
-    const storyLayer=items.find(item=>item.name==='story')?.layer;
+    let pending=false,current='';
+    const neighbors=new Set(['opening','photo','story']);
     function refresh(){
       pending=false;
-      const height=window.innerHeight||document.documentElement.clientHeight;
-      const focus=height*0.5;
-      const photoRect=photoScene?.getBoundingClientRect();
-      const storyRect=story?.getBoundingClientRect();
-      // The curtain opens strictly with scroll progress (reversible in both
-      // directions). At rect.top=viewport height the photo is hidden; at
-      // rect.top=0 the full fixed photo has been exposed bottom-to-top.
-      const peeling=!!(openingLayer && photoLayer && photoRect &&
-        photoRect.top>0 && photoRect.top<height &&
-        opening.getBoundingClientRect().bottom>0);
-      // Avoid a one-second full-frame flash if a quick upward gesture jumps
-      // past the curtain before its fading visibility transition can finish.
-      photoLayer?.classList.toggle('curtain-out-of-view',!!photoRect && photoRect.top>=height);
-      // Lapisan slide 6 tidak boleh menembus tirai 4 -> 5 ketika
-      // pengguna scroll kembali ke atas dengan cepat.
-      storyLayer?.classList.toggle('story-curtain-out-of-view',
-        !!storyRect && storyRect.top>=height);
-      if(peeling){
-        // Saat kembali cepat dari slide 6, bersihkan tirai 5 -> 6 dulu
-        // agar mask slide 4 -> 5 tetap bekerja tanpa benturan.
-        photoLayer?.classList.remove('story-curtain-underlay');
-        storyLayer?.classList.remove('story-curtain-reveal');
-        root.style.removeProperty('--story-curtain-edge');
-        root.style.setProperty('--curtain-edge',Math.max(0,Math.min(height,photoRect.top)).toFixed(2)+'px');
-        openingLayer.classList.add('curtain-underlay');
-        photoLayer.classList.add('curtain-reveal');
-        items.forEach(item=>item.layer.classList.toggle('is-active',item.layer===openingLayer || item.layer===photoLayer));
-        current='curtain';
-        return;
-      }
-      openingLayer?.classList.remove('curtain-underlay');
-      photoLayer?.classList.remove('curtain-reveal');
-      root.style.removeProperty('--curtain-edge');
-
-      // Slide 5 -> 6: latar foto gelap + overlay slide 6 membuka dari
-      // BAWAH ke ATAS tepat mengikuti tepi masuknya slide 6 di layar.
-      // Saat scroll naik, tirai menutup lagi secara alami.
-      const revealingStory=!!(photoLayer && storyLayer && storyRect &&
-        storyRect.top>0 && storyRect.top<height &&
-        photoRect && photoRect.bottom>0);
-      if(revealingStory){
-        root.style.setProperty('--story-curtain-edge',
-          Math.max(0,Math.min(height,storyRect.top)).toFixed(2)+'px');
-        photoLayer.classList.add('story-curtain-underlay');
-        storyLayer.classList.add('story-curtain-reveal');
-        items.forEach(item=>item.layer.classList.toggle('is-active',
-          item.layer===photoLayer || item.layer===storyLayer));
-        current='story-curtain';
-        return;
-      }
-      photoLayer?.classList.remove('story-curtain-underlay');
-      storyLayer?.classList.remove('story-curtain-reveal');
-      root.style.removeProperty('--story-curtain-edge');
-
+      const h=window.innerHeight||document.documentElement.clientHeight;
+      const focus=h*.5;
       let choice=null;
-      // Other slides keep their existing gentle crossfade based on the
-      // center of the viewport.
       for(const item of items){
         const r=item.stage.getBoundingClientRect();
         if(r.top<=focus && r.bottom>focus){choice=item;break;}
       }
       if(!choice){
-        let distance=Infinity;
+        let closest=Infinity;
         for(const item of items){
           const r=item.stage.getBoundingClientRect();
-          const gap=focus<r.top ? r.top-focus : focus>=r.bottom ? focus-r.bottom : 0;
-          if(gap<distance){distance=gap;choice=item;}
+          const gap=focus<r.top?r.top-focus:focus>=r.bottom?focus-r.bottom:0;
+          if(gap<closest){closest=gap;choice=item;}
         }
       }
       const next=choice?.name||'';
       if(next!==current){
+        // Hanya perpindahan 4->5 dan 5->6 (beserta arah baliknya)
+        // yang tanpa animasi. Story -> penutup tetap crossfade asli.
+        const instant=neighbors.has(next) && (neighbors.has(current)||!current);
+        root.classList.toggle('instant-prewedding-neighbors',instant);
         items.forEach(item=>item.layer.classList.toggle('is-active',item===choice));
         current=next;
       }
